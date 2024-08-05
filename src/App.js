@@ -10,15 +10,9 @@ const App = (_) => {
 
   const playAudio = (_name, _country) => {
     let _audio = document.querySelector("#audio");
-
-    // if (_audio.getAttribute(`data-anthem`)===_name){
-    //   _audio.pause()
-    // }else{
-
-      setCountry(_country);
-      setAnthem(_name);
-      setTimeout(() => _audio.play(), 500);
-    // }
+    setCountry(_country);
+    setAnthem(_name);
+    setTimeout(() => _audio.play(), 500);
   };
 
   useEffect(() => {
@@ -43,24 +37,15 @@ const App = (_) => {
   }
   return (
     <div>
-      {/* <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Embraer_EMB-202_Ipanema.jpg?20120321213634" />
-      <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Dassault_Falcon_2000_AN1716407.jpg" />
-      <p>
-        Par Konstantin von Wedelstaedt — Gallery page
-        http://www.airliners.net/photo/Dassault-Falcon-2000/1716407/LPhoto
-        http://cdn-www.airliners.net/aviation-photos/photos/7/0/4/1716407.jpg,
-        GFDL 1.2, https://commons.wikimedia.org/w/index.php?curid=26821637
-      </p> */}
       <header>
-        {/* <h1>{country}</h1> */}
         <h1>FLAGS</h1>
-          <input
-            type="search"
-            placeholder="Enter a country ..."
-            onChange={(event) => {
-              setSearchTerm(event.target.value);
-            }}
-          />
+        <input
+          type="search"
+          placeholder="Enter a country ..."
+          onChange={(event) => {
+            setSearchTerm(event.target.value);
+          }}
+        />
       </header>
       <ol>
         {Object.entries(data)
@@ -87,11 +72,11 @@ const App = (_) => {
       </ol>
 
       <audio
-            id="audio"
-            controls
-            data-anthem={anthem}
-            src={`http://www.nationalanthems.info/${anthem}.mp3`}
-          ></audio>
+        id="audio"
+        controls
+        data-anthem={anthem}
+        src={`http://www.nationalanthems.info/${anthem}.mp3`}
+      ></audio>
     </div>
   );
 };
