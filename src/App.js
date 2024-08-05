@@ -75,7 +75,7 @@ const App = (_) => {
         id="audio"
         controls
         data-anthem={anthem}
-        src={`http://www.nationalanthems.info/${anthem}.mp3`}
+        src={`https://www.nationalanthems.info/${anthem}.mp3`}
       ></audio>
     </div>
   );
