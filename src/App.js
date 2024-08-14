@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
+import Header from './components/Header';
 import Flag from './components/Flag';
 import Audio from './components/Audio';
+import Loading from "./components/Loading";
 
 const DEFAULT_COUNTRY_NAME = `FLAGS`;
 const DEFAULT_COUNTRY_CODE = `fr`;
@@ -38,16 +40,9 @@ export default function App() {
       });
   }, []);
 
-  return loading ? <p>Data is loading...</p> : (
-    <div>
-      <header>
-        <h1>{country}</h1>
-        <input
-          type="search"
-          placeholder="Enter a country ..."
-          onChange={(event) => setSearchTerm(event.target.value)}
-        />
-      </header>
+  return loading ? <Loading /> : (
+    <>
+      <Header country={country} onChange={setSearchTerm} />
       <ul>
         {Object.entries(data)
           .filter((val) => {
@@ -58,20 +53,13 @@ export default function App() {
               return val;
           })
           .map(([key, value]) =>
-            Object.keys(key).length < 3 ? (
-              <li
-                key={key}
-                onClick={() => playAudio(key, value)}
-              >
-                <Flag urlCdn={URL_CDN} code={key} name={value} />
-              </li>
-            ) : null
+            Object.keys(key).length < 3 ? <Flag key={key} name={value} code={key} urlCdn={URL_CDN} onClick={playAudio} /> : null
           )}
       </ul>
 
       <Audio
         ref={audio}
         anthem={anthem} />
-    </div>
+    </>
   );
 };
