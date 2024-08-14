@@ -52,14 +52,14 @@ audio::-webkit-media-controls-panel {
 img {
   width: 200px;
 }
-ol {
+ul {
   display: flex;
   flex-wrap: wrap;
 }
-ol li:hover > img {
+ul li:hover > img {
   filter: brightness(1);
 }
-ol li {
+ul li {
   background-color: rgba(255, 255, 255, 0.9);
   display: flex;
   flex-direction: column;
@@ -72,7 +72,7 @@ ol li {
   /* border: 1px solid #fff; */
   /* box-shadow: 0px 2px 4px #444; */
 }
-ol li p {
+ul li p {
   padding: 10px;
   /* position: absolute; */
   bottom: 0px;
@@ -85,7 +85,7 @@ ol li p {
   text-transform: uppercase;
   font-size: 14px;
 }
-ol li img {
+ul li img {
   width: 100%;
   filter: brightness(0.8);
   transition: 0.2s;
@@ -97,7 +97,7 @@ ol li img {
   input[type="search"] {
     width: 100%;
   }
-  ol li {
+  ul li {
     width: calc(33.33% - 80px);
   }
 }
@@ -105,7 +105,7 @@ ol li img {
   input[type="search"] {
     width: 100%;
   }
-  ol li {
+  ul li {
     width: calc(50% - 80px);
   }
 }
@@ -113,7 +113,7 @@ ol li img {
   input[type="search"] {
     width: 100%;
   }
-  ol li {
+  ul li {
     width: calc(100% - 80px);
   }
 }

@@ -1,25 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
-const App = (_) => {
+import Flag from './components/Flag';
+import Audio from './components/Audio';
+
+const DEFAULT_COUNTRY_NAME = `FLAGS`;
+const DEFAULT_COUNTRY_CODE = `fr`;
+const URL_CDN = `https://flagcdn.com`;
+const LANG = `en`;
+const URL_COUNTRIES_CODES = `${URL_CDN}/${LANG}/codes.json`;
+
+export default function App() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [country, setCountry] = useState("Flag");
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const [anthem, setAnthem] = useState("fr");
+  const [country, setCountry] = useState(DEFAULT_COUNTRY_NAME);
+  const [anthem, setAnthem] = useState(DEFAULT_COUNTRY_CODE);
+  const [searchTerm, setSearchTerm] = useState('');
+  const audio = useRef(null);
 
   const playAudio = (_name, _country) => {
-    let _audio = document.querySelector("#audio");
     setCountry(_country);
     setAnthem(_name);
-    setTimeout(() => _audio.play(), 500);
+    setTimeout(() => audio.current.play(), 500);
   };
 
   useEffect(() => {
     setLoading(true);
-    const _pathCND = `https://flagcdn.com`;
-    const _lang = `en`;
-    fetch(`${_pathCND}/${_lang}/codes.json`)
+    fetch(URL_COUNTRIES_CODES)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
@@ -32,22 +38,17 @@ const App = (_) => {
       });
   }, []);
 
-  if (loading) {
-    return <p>Data is loading...</p>;
-  }
-  return (
+  return loading ? <p>Data is loading...</p> : (
     <div>
       <header>
-        <h1>FLAGS</h1>
+        <h1>{country}</h1>
         <input
           type="search"
           placeholder="Enter a country ..."
-          onChange={(event) => {
-            setSearchTerm(event.target.value);
-          }}
+          onChange={(event) => setSearchTerm(event.target.value)}
         />
       </header>
-      <ol>
+      <ul>
         {Object.entries(data)
           .filter((val) => {
             if (
@@ -60,25 +61,17 @@ const App = (_) => {
             Object.keys(key).length < 3 ? (
               <li
                 key={key}
-                onClick={(event) => {
-                  playAudio(key, value);
-                }}
+                onClick={() => playAudio(key, value)}
               >
-                <img src={`https://flagcdn.com/` + key + `.svg`} alt={key} />
-                <p>{value}</p>
+                <Flag urlCdn={URL_CDN} code={key} name={value} />
               </li>
             ) : null
           )}
-      </ol>
+      </ul>
 
-      <audio
-        id="audio"
-        controls
-        data-anthem={anthem}
-        src={`https://www.nationalanthems.info/${anthem}.mp3`}
-      ></audio>
+      <Audio
+        ref={audio}
+        anthem={anthem} />
     </div>
   );
 };
-
-export default App;
